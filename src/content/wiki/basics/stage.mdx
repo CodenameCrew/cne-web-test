@@ -1,7 +1,7 @@
 ---
 author: Betopia
 desc: How to manually make a Stage XML
-lastUpdated: 2026-8-27
+lastUpdated: 2026-09-06T01:46:20.985Z
 title: Stage XMLs
 ---
 import InlineCode from '../../../components/InlineCode.astro';
@@ -46,7 +46,7 @@ These are located in `./data/stages/`, which then you put on your songs by going
     - `name`: Doesn't do much on its own, but still recommended to keep it.
     - `folder`: The starting folder for your sprite paths. See [**Troubleshooting** § Stage Assets](/wiki/troubleshooting#game-cant-find-assets-for-my-stage--stage-editor-doesnt-show-my-sprites).
     - `zoom`: The default zoom for the stage, this will also be the starting value for <InlineCode lang="haxe" code={`PlayState.instance.defaultCamZoom`}/>.
-    - `startCamPos?`: The camera position on the very first frame of entering gameplay.
+    - `startCamPosX/Y`: The camera position on the very first frame of entering gameplay.
 
 - <InlineCode lang="xml" code={`<boyfriend>`}/>, <InlineCode lang="xml" code={`<girlfriend>`}/>, <InlineCode lang="xml" code={`<dad>`}/>, <InlineCode lang="xml" code={`<character name="?????">`}/>: Character position for, well, characters. You may also provide:
     - `x`: X.
@@ -75,8 +75,11 @@ These are located in `./data/stages/`, which then you put on your songs by going
     
     - `zoomfactor`: Despite not being present here, this is a new Codename Engine feature. Think of this as <InlineCode lang="haxe" code={`scrollFactor.z`}/>; except that is, obviously, not a thing. It changes how much a sprite is scaled up when the camera zooms.
 
+    - `color`: Also not mentioned but very useful. Tints this sprite by a hex color. Uses values like <code class="token string" set:html='"#98C379"'/>.
+
     - `sprite` **(attribute, notice it's orange, not red)**: The path to your sprite, with the <InlineCode lang="xml" code={`<stage folder>`}/> prefixed automatically. Once again, see [**Troubleshooting** § Stage Assets](/wiki/troubleshooting#game-cant-find-assets-for-my-stage--stage-editor-doesnt-show-my-sprites).
 
+    This node can also be named <InlineCode lang="xml" code={`<spr>`}/> or <InlineCode lang="xml" code={`<sparrow>`}/>... although I now think that last one is a little dated, there's support for multiple types of spritesheets.
 
 ...and for the record, `<!DOCTYPE codename-engine-stage>` is useless. It's there for sugar syntax, y'know, like `<!DOCTYPE html>`. But for Codename stages. Great.
 
@@ -180,4 +183,107 @@ The types available are:
 - `boolean`, `b`, `bool`: Can only be either `true` or `false`.
 - `c`, `color`: A text string that represents a color, like <code style="color: #fff; background-color: #f00; padding: 3px;">#ff0000</code>, <code style="color: #fff; background-color: #f00; padding: 3px;">0xff0000</code>, <code style="color: #fff; background-color: #f00; padding: 3px;">red</code>... Keep in mind named colors must come from [`FlxColor`](https://deltarune.com/lancer/)'s list of constants.
 
-With the way it all works, all simple properties can be set like this. I think i didn't even need to say that
+With the way it all works, all simple properties can be set like this. I think I didn't even need to say that
+
+---
+
+# Quite Advanced Node Stuff But Not Really Advanced They're Just Uncommon
+
+We're going to get into niche territory for this one, most people don't know these nodes exist but, it is my duty to explain these.
+
+## The <InlineCode lang="xml" code={`<solid>`}/> Node
+
+Can also be named <InlineCode lang="xml" code={`<box>`}/>. This works like a regular
+<InlineCode lang="xml" code={`<sprite>`}/>, EXCEPT there is NO animation support for... obvious reasons.
+It only brings 2 new required attributes: `width` and `height`. `color` is also now required? I think?
+
+An example of a solid looks like this:
+```xml
+<!-- remember to `name` it if you want to access it in a stage script! -->
+<solid name="awesome" x="0" y="0" width="1280" height="720" color="#ff0000" scroll="0" zoomfactor="0" blend="overlay" />
+```
+This makes a solid color sprite on top of whatever is under it (remember how ordering works..), covering the whole
+screen (1280x720), is not affected by camera scrolling or zooming, and has a blend mode of... wait. what is that
+
+## The Rest of <InlineCode lang="xml" code={`<sprite>`}/> Attributes
+
+Uhh... yeah, I didn't really explain ALL of them earlier, just the basic ones. This part will go over nearly all of them!
+
+For the sake of reading length, attributes with X and Y separated equivalents (`scroll` → `scrollx` and `scrolly`) will now be **marked with an asterisk.** (`scroll*`)
+
+- `scale*`: The scale of the sprite (multiplicative).
+    - You might want to add <InlineCode lang="ini" code={`updateHitbox="true"`}/> to your attributes as well.
+
+- `graphicSize*`: The scale of the sprite (absolute, in pixels). You might not use this often.
+    - Despite the clear camel case on that example, the separated values are `graphicSizex` and `graphicSizey`. I don't know who did that. I need to find who did that. Immediately
+
+- `antialiasing`: Whether or not to smoothen out the sprite's pixels in game. Set this to `false` for pixel art, for example.
+    - This attribute is forced to `false` when Antialiasing is disabled in the Options menu.
+
+- `skew*`: Apply skewing/shearing to the sprite. Values are in degrees. Despite being marked with an asterisk, a lone `skew` attribute does not exist, that would be...
+
+- `angle`: Rotate this sprite by specified degrees.
+
+- `blend`: It's a big one, it lets you add a blend mode to a sprite! Supported values ***as of 1.1.0*** are:
+```yaml
+NORMAL # you don't need to specify it. you may leave it blank or undefined.
+ADD
+SUBTRACT
+MULTIPLY
+DARKEN
+LIGHTEN
+OVERLAY
+SCREEN
+HARDLIGHT
+SOFTLIGHT
+COLORBURN
+COLORDODGE
+DIFFERENCE
+EXCLUSION
+INVERT
+HUE
+SATURATION
+COLOR
+LUMINOSITY
+```
+They don't need to be uppercase.
+
+## The <InlineCode lang="xml" code={`<spritesheet>`}/> Node
+
+Works the same as it does in characters, these MUST be inside a <InlineCode lang="xml" code={`<sprite>`}/> however:
+
+```xml
+<stage folder="amazing">
+    <!-- sprite attrib doesn't change much here, it is still loaded as the default sheet -->
+    <sprite name="example" sprite="defaultSheet">
+        <!-- both of these are supported -->
+        <spritesheet path="appendedSpriteSheet" /> <!-- loads ./images/amazing/appendedSpriteSheet.png -->
+        <spritesheet>otherAppendedSheet</spritesheet> <!-- loads ./images/amazing/otherAppendedSheet.png -->
+    </sprite>
+</stage>
+```
+
+# The Big One, The <InlineCode lang="xml" code={`<ext>`}/> Node
+
+Can also be written as <InlineCode lang="xml" code={`<use-extension>`}/> and <InlineCode lang="xml" code={`<extension>`}/>.
+
+You're probably only gonna use this if you want to reuse scripts across multiple stages and don't want to copy paste that script's content into every stage script (`[NAME].hx`).
+
+Example usage:
+
+```xml
+<stage>
+    <!-- will load ./data/scripts/reusable-stage-script.hx -->
+    <ext script="reusable-stage-script" folder="data/scripts/" />
+    <sprite x="0" y="0" />
+    <!-- rest goes here... -->
+</stage>
+```
+
+- `folder`: The folder where the script will be found in. Defaults to `data/scripts/`.
+- `script`: The file name of your script.
+- `loadBefore`: Loads this script before the base stage script (the .hx one, like, the one next to your xml with the same name, that one, it loads before that one). Defaults to `false`.
+- `shortLived`: If this script should kill itself after the loading process has finished. May also be written as `isShortLived`. Defaults to `false`.
+- `importStageSprites`: Whether stage sprites should be accessible in this script, by their `name` attribute. Defaults to `false`.
+
+Now I know i just told you about scripts but, we'll get to the details of it wayyy later ok My hand hurts writing this Help´

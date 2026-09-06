@@ -8,17 +8,22 @@
     ["basics", "<span style='color: #6f3;'>Basics</span>", [
         ["xml", "XML Data Syntax"],
         ["character", "Characters"],
-        ["stage", "Stages"],
+        ["stage", "Stages (XML)"],
+        ["stage-editor", "Stage Editor"],
         ["song", "Songs"],
         ["weeks", "Weeks"]
     ], true],
     ["average", "<span style='color: #fecc5c;'>Average</span>", [
-        ["hscript", "HScript"],
+        ["hscript", "HScript", [
+            ["features", "Features"]
+        ]],
         ["scripting", "Callbacks and Script Events", [
             ["playstate", "PlayState Related Scripts", [
                 ["character", "Character Scripts"],
                 ["stage", "Stage Scripts"],
-                ["song", "Song Scripts"]
+                ["song", "Song Scripts"],
+                ["events", "Song Events"],
+                ["notetypes", "Note Types"]
             ], true],
             ["states", "Scripting on Existing States"],
             ["global", "Global Script"]
@@ -26,20 +31,22 @@
     ], true],
     ["hard", "<span style='color: #fe8f5c;'>Hard</span>", [
         ["custom-states", "Custom States"],
+        ["videos", "Videos"],
         ["cutscenes", "Cutscenes", [
             ["video", "Video"],
             ["dialogue", "Dialogue"],
             ["script", "Scripted"]
         ]],
         ["shaders", "Shaders"],
-        ["addons", "Addons and Their Use Cases"]
+        ["addons", "Addons and Their Use Cases"],
+        ["flags", "Flags"]
     ], true],
     ["expert", "<span style='color: #f13e5c;'>Expert</span>", [
         ["modcharts", "Modcharting"],
         ["3d", "3D Rendering"],
         ["classes", "Scripted Classes"]
     ], true],
-    ["master", "<img src='https://tiermaker.com/images/templates/mr-incredible-uncanny-faces-1206582/12065821641131983.png' height='40' style='display: flex; width: 100%;'/>", [
+    ["master", "<img src='https://tiermaker.com/images/templates/mr-incredible-uncanny-faces-1206582/12065821641131983.png' height='32' style='display: flex; width: 100%;'/>", [
         ["asset-libraries", "Asset Libraries"],
         ["ndll", "NDLL"],
         ["source", "<span style='color: #f99; text-shadow: 0px 0px 2px #f00, 0px 0px 8px #f00'>Source Code</span>", [

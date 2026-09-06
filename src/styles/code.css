@@ -12,8 +12,14 @@ code:not(pre > code, .inline-code) {
     color: #d19a66;
 }
 
-code:not(pre > code, :target code), :target.with-desc code {
+code:not(pre > code, :target code, a > code), :target.with-desc code {
     border: 2px solid var(--background-primary-color);
+    background-color: var(--background-secondary-color);
+}
+
+a > code {
+    border: 1px dashed var(--link-color);
+    padding: 1px;
     background-color: var(--background-secondary-color);
 }
 

@@ -4,8 +4,8 @@ desc: Creating and Using Shaders
 lastUpdated: 2026-08-07T16:39:14.193Z
 title: Advanced Topics - Shaders
 ---
-import InlineCode from '../../../../components/InlineCode.astro';
-import Note from '../../../../components/Note.astro';
+import InlineCode from '../../../components/InlineCode.astro';
+import Note from '../../../components/Note.astro';
 
 <h1 id="what" sidebar="What Are Shaders?">What Are Shaders?</h1>
 
@@ -123,9 +123,9 @@ The following is some good information to know:
 
 - Avoid using or initializing variables that start with `gl_`, or that use the name <InlineCode lang="glsl" code={`input`}/> or <InlineCode lang="glsl" code={`sample`}/> - these can break shaders on some or all platforms.
 
-- The non-regular vector families (<code class="token keyword" set:html="ivecX"/>, <code class="token keyword" set:html="bvecX"/>, <code class="token keyword" set:html="uvecX"/>), and <InlineCode lang="glsl" code={`uint`}/> are all unsupported on certain platforms, so avoid using them.
+- The unusual vector families (<code class="token keyword" set:html="ivecX"/>, <code class="token keyword" set:html="bvecX"/>, <code class="token keyword" set:html="uvecX"/>) and <InlineCode lang="glsl" code={`uint`}/> are all unsupported on certain platforms, so avoid using them.
 
-- Avoid using the modulo operator and instead use the mod function.
+- Avoid using the modulo operator (`%`) and instead use the <code class="token function" set:html="mod"/> function.
 
 - Avoid using arrays as some platforms don't support them.
 

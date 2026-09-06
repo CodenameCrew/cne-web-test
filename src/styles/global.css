@@ -12,6 +12,7 @@
     --text-color: white;
     --scrollbar-color: #302235;
     --code-background: #130d15;
+    --link-color: #00bbff;
 }
 
 [x-cloak] {
@@ -41,7 +42,7 @@ h3 {
 }
 
 a {
-    color: #00bfff;
+    color: var(--link-color);
 }
 
 html {

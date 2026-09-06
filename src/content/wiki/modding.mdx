@@ -1,10 +1,10 @@
 ---
-author: ItsLJcool
-desc: Basic tutorial on how to setup and initalize your own mod!.
+author: ItsLJcool & rufius
+desc: Basic tutorial on how to setup, initalize and configure your own mod!
 lastUpdated: 2025-11-15T05:32:50.298Z
 title: Modding The Engine
 ---
-import Note from '../../../components/Note.astro';
+import Note from '../../components/Note.astro';
 
 # Modding The Engine
 
@@ -89,25 +89,95 @@ Don't be scared by the amount of folders, usually you only mess with the `songs/
 
 ## Sections
 These areas will split up into their own sub-pages, and they will explain to you what each folder is for, what files you can add, and how to effectively use them.
-- <a href="./modding/config/">Configuration</a>
-- <a href="./modding/libraries/">What is a "AssetLibrary"?</a>
-- <a href="./modding/scripting/">Scripting</a>
-    - <a href="./modding/scripting/features/">Scripting Features</a>
-    - <a href="./modding/scripting/style/">Code Formatting / Style</a>
-    - <a href="./modding/scripting/cancellables/">Event Callbacks</a>
-    - <a href="./modding/scripting/playstate/">PlayState Scripting</a>
-    - <a href="./modding/scripting/states/">Custom States / SubStates</a>
-    - <a href="./modding/scripting/events/">Custom Events / Notetypes</a>
-    - <a href="./modding/scripting/global/">Global Script(s)</a>
-    - <a href="./modding/scripting/classes/">Custom Classes</a>
-- <a href="./modding/editors/">Editors Introduction</a>
-    - <a href="./editors/chart/">Chart Editor</a>
-    - <a href="./editors/character/">Character Editor</a>
-    - <a href="./editors/stage/">Stage Editor</a>
-    - <a href="./editors/alphabet/">Alphabet Editor...?</a>
-    - <a href="./editors/character/">Custom Editors</a>
-- <a href="./modding/videos/">Using hxvlc for Videos</a>
-- <a href="./modding/advanced/">Intro to Advanced Topics</a>
+- (add them here when finished)
 
 All of those above are for Softcoding, if you want to learn how to mod Source, you can check out the Introduction here
 - <a href="/wiki/source/">Modding The Engine - Source</a>
+
+---
+
+# Modpack Configuration
+First and foremost, you must create a folder in the `./mods` folder! We will use the name `./mymod` to signify the mod folder you just made, but you can choose any name you want regardless.
+
+Now you may open the game and select the mod you just made.
+
+When you first load up your Modpack for the fist time, you will see this warning message:
+<div style="display: flex; justify-content: center;">
+    <img src={(import.meta.env.DEV?'':import.meta.env.BASE_URL)+'/'+"wiki/images/config/warning.png"} alt="Warning Screen for launching a Modpack without a modpack.ini file"/>
+</div>
+
+Clicking yes will auto-generate a `modpack.ini` file for you, and opening it from `./data/config/modpack.ini` should look something similar to this:
+```ini
+[Common] # This section applies the 'MOD_' prefix to the flags so you don't have to.
+NAME="YOUR MOD NAME HERE"
+DESCRIPTION="YOUR MOD DESCRIPTION HERE"
+AUTHOR="YOU/YOUR TEAM HERE"
+VERSION="YOUR MOD'S VERSION HERE"
+
+# DO NOT EDIT!! this is used to check for version compatibility!
+API_VERSION=1
+
+DOWNLOAD_LINK="YOUR MOD PAGE LINK HERE"
+
+# Not supported yet
+;MOD_ICON64="path/to/icon64"
+;MOD_ICON32="path/to/icon32"
+;MOD_ICON16="path/to/icon16"
+# The path starts in "your-mod/images/", do not add image extension.
+ICON="path/to/icon"
+
+[Flags] # This section doesn't apply any prefix.
+DISABLE_WARNING_SCREEN=true
+# Set this to false if you want to bring back the warning state (prior to 1.0.0)
+# NOTE: Beta warning state has been renamed from BetaWarningState.hx to WarningState.hx
+DISABLE_LANGUAGES=true
+# Some people might not translate their mods, but if you do then you may set this to false
+
+[Discord] # This section applies the 'MOD_DISCORD_' prefix to the flags so you don't have to.
+CLIENT_ID=""
+LOGO_KEY=""
+LOGO_TEXT=""
+
+[StateRedirects] # This section is used for state redirecting, see examples below.
+;StoryMenuState="funkin.menus.FreeplayState"
+;FreeplayState="scriptedFreeplayState"
+
+[StateRedirects.force] # Use this if you want to override redirects set by subsequent addons/mods
+```
+This is your `INI` file, the file that holds all of your configuration. The essential properties have already been written out for you to change, but if you want to edit any more properties you may consult this page [insert link here]
+
+<h2 id="state-redirects" sidebar="State Redirects">State Redirects</h2>
+
+This is something that you will be most likely using a LOT, as it will help you easily replace the current Base Game menus with ones of your own!
+
+You can redirect ANY menu and state by inputting the Class Name of it, and setting it to a string that points to either different menu (basically if you want to skip MainMenuState by replacing it with FreeplayState), or a ModState Script! Though at this point you must also know how to code your own menus... (we cover that in [insert link here])
+```ini
+[StateRedirects]
+TitleState="funkin.menus.MainMenuState"
+StoryMenuState="MyCustomState"
+```
+Using `StateRedirects.force` is reserved for Addons, but using it in mods is the same as using `StateRedirects`. Will override any `StateRedirects` set by other Mods.
+
+<h2 id="discord-config" sidebar="Discord Configuration">Discord Configuration</h2>
+
+Discord Rich Presence is configured using modpack.ini, it's very simple as all you have to do is provide an **Application ID**.
+
+Assuming that [you've already created the Discord application for the modpack](https://discord.com/developers/applications), you'll see the **Application ID**. You must put it in the `CLIENT_ID` field. Copy the application ID into the flag to allow Codename to recognize your Discord application.
+
+Art assets can be added to the application for Rich Presence by navigating to the Rich Presence menu on the sidebar, and adding the asset you need.
+#### Do note that the modpack configuration only supports the large image key, so you only need to add a single asset.
+Once you've added your asset, preferably following [Discord's recommendations](https://discord.com/developers/docs/rich-presence/overview#adding-custom-art-assets),
+you can use the Rich Presence visualizer to use your asset and display it as the large image key. You can then place the name of the asset key as the value of the `Discord` section's `LOGO_KEY` flag.
+
+The `large image text` is the tooltip text displayed upon hovering over it with your mouse. You can set this using the `LOGO_TEXT` flag
+like the other two flags.
+
+Here is what your `modpack.ini` should look like
+```ini
+[Discord] # This section applies the 'MOD_DISCORD_' prefix to the flags so you don't have to.
+CLIENT_ID="<MY CLIENT ID FROM Discord Developer Portal>"
+LOGO_KEY="<Logo image name>"
+LOGO_TEXT="Hey guys! Look im text!!"
+```
+
+Do note that the modpack configuration isn't the only way to configure Discord Rich Presence. Using **[DiscordUtil](../../../api-docs/funkin/backend/utils/DiscordUtil.html)** allows you to implement custom behavior via scripting.

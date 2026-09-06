@@ -60,20 +60,23 @@ function stupid(a:any, root?:string):string {
         if (a.name == url[0]) {
              break;
         }
-        url.shift()
+        url.shift();
     }
     const shouldStartOpen = (url[0] == a.name);
     
     if (a.children.length > 0) {
         return `
-        <div x-data="{show:${shouldStartOpen}}">
-            <div class="panel" style="position: relative; padding: 2px; margin: 2px; display: flex; align-items: center; justify-content: space-between;">
-                <span style="font-weight: bold;">${a.name}</span>
-                <span x-on:click="show = !show" style="cursor: pointer; position: absolute; top: 0; width: calc(100% - 8px); height: calc(100% - 8px); text-align: right; vertical-align: middle; padding: 4px;">
-                    <img src="${(import.meta.env.DEV?'':import.meta.env.BASE_URL)+'/'+"img/icons/pixel/menu.png"}" alt="Show/Hide" title="Show/Hide" width="16" height="16" style="image-rendering: pixelated; margin-top: auto; margin-bottom: auto;"/>
-                </span>
+        <div>
+            <div class="panel" style="
+            position: relative; padding: 2px;
+            margin: 2px; display: flex;
+            align-items: center; justify-content: space-between;
+            cursor: pointer;"
+            onclick="this.parentNode.children[1].classList.toggle('hidden')">
+                <span style="font-weight: bold;" class="what mem">${a.name}</span>
+                <img class="what mem" src="${(import.meta.env.DEV?'':import.meta.env.BASE_URL)+'/'+"img/icons/pixel/menu.png"}" alt="Show/Hide" title="Show/Hide" width="16" height="16" style="image-rendering: pixelated; margin-top: auto; margin-bottom: auto; float: right;"/>
             </div>
-            <div x-show="show" style="display: flex; flex-direction: column; margin-left: 0.5em; padding-left: 0.5em; border-left: 2px solid var(--primary-color);">
+            <div class="${!shouldStartOpen ? 'hidden' : ''} subfolder" style="display: flex; flex-direction: column; margin-left: 0.5em; padding-left: 0.5em; border-left: 2px solid var(--primary-color);">
                 ${a.children.map((b:any)=>stupid(b, root+a.name+'/')).join('\n')}
             </div>
         </div>
@@ -146,16 +149,20 @@ const { title } = Astro.props;
         }
         document.querySelector("#input").addEventListener("input", function () {
             var q = this.value.trim();
+            document.querySelectorAll(".subfolder").forEach(function (li) {
+                li.classList.remove('hidden');
+            });
             document.querySelectorAll(".what").forEach(function (li) {
+                li.classList.remove('hidden');
                 if (li.parentElement.classList.contains("mem")) return;
                 var cls = li.getAttribute("data-name") || "";
                 var classHit = fuzzy(q, cls);
                 var memberHit = false;
-                li.querySelectorAll(".mem > li").forEach(function (mli) {
+                /*li.querySelectorAll(".mem > li").forEach(function (mli) {
                     var hit = q !== "" && fuzzy(q, mli.getAttribute("data-name") || "");
                     mli.classList.toggle("mhit", hit);
                     if (hit) memberHit = true;
-                });
+                });*/
                 li.classList.toggle("hidden", !(classHit || memberHit) && q !== "");
                 li.classList.toggle("expanded", memberHit && q !== "");
             });

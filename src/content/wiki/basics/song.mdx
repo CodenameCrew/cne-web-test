@@ -2,9 +2,9 @@
 author: Bitto1070 & Betopia
 desc: Explains all the details of how to create a new Chart / Song in Codename Engine
 lastUpdated: 2026-03-30T17:47:59.930Z
-title: Editors - Chart Editor
+title: Creating Songs
 ---
-import InlineCode from '../../../../components/InlineCode.astro';
+import InlineCode from '../../../components/InlineCode.astro';
 
 # Creating Songs
 In Codename Engine, there's two ways to add a song to your mod: directly adding the files, and using the editor.
@@ -377,3 +377,40 @@ On the right side are the properties of the strumline, which are all previewable
 - `Scroll Speed` is the strumline's individual scroll speed. It can only be changed if `Uses charts scroll speed?` is unchecked, otherwise the strumline will use the global scroll speed.
 - `Vocal Suffix` sets the vocal track assigned to the strumline. any song track that starts with `Voices-` will appear here.
 - `Key Count` defines how many strums make up the strumline.
+
+---
+
+# Listing Songs in Menus
+
+Now, if you've finished your chart and saved it, you should probably get to making it actually accessible by players.
+Easiest way to list a song in the Freeplay Menu is to add your song's **folder name** (NOT display name! that is completely different) to `./data/config/freeplaySonglist.txt`.
+
+This file can be used to actually sort your songs the way you want instead of the default alphabetical order.
+
+By default, it will replace the entire list,
+but if you want to list them above or below base game songs... you might need to wait when we get to the [Flags](../../hard/flags) section...
+
+A `freeplaySonglist.txt` usually looks something like this:
+
+```yaml
+# This is a comment! It will not show up in game.
+test
+tutorial
+
+bopeebo
+fresh
+dadbattle
+
+# Separating by weeks is optional, it makes it easier to read for you
+spookeez
+south
+monster
+pico
+philly nice
+blammed
+bro
+```
+
+This would apply *only* to the Freeplay menu however, Story Mode menu handles it separately, in case there's extra songs you dont want in story mode.
+
+Speaking of, **we're now going to see how to make [weeks](../weeks)!**
