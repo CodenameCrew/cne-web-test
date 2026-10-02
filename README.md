@@ -7,15 +7,17 @@
 uhh yea it is being remade !!!!! contributors might wanna like .  look at the notes below
 
 ## Contributing
-### Mod Index
-at the index page there is mods on the right .    NOT ALL OF THEM ARE PORTED YET u might wanna help out with that process if you want . just go to `src/content/mods/` and place your json there accordingly.
-
-cover images go in `public/img/mods/`
-
 ### Wiki
 it was changed a bit and now it is moved to `src/content/wiki/`. Sometimes u will need to use `.mdx` instead of `.md` to get components like `<Note/>` to work
 
 images may now be placed in `public/wiki/images/`
+
+**please refer to [GUIDELINES.md](/GUIDELINES.md) for wiki guidelines (adding/changing pages)**
+
+### Mod Index
+at the index page there is mods on the right .    NOT ALL OF THEM ARE PORTED YET u might wanna help out with that process if you want . just go to `src/content/mods/` and place your json there accordingly.
+
+cover images go in `public/img/mods/`
 
 ### API Docs
 u may notice they are simply not there . rn were looking for a way to do it again more efficently without storing like 500 jsons in `src/content/api-docs/` (help)
