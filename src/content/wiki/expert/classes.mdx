@@ -91,7 +91,7 @@ You can also extend other classes, but there is a limit and some things to note.
 Any class with `<T>` or Abstract class you cannot extend from. This is in the works to be fixed.
 
 You cannot extend `FlxState` / `FlxSubState` because they extend off of `FlxGroup` (which is `FlxTypedGroup<T:FlxBasic>`)
-There is no need to anyways since [Custom States](./states.md) exists for you to use.
+There is no need to anyways since [Custom States](../hard/custom-states.mdx) exists for you to use.
 
 And one final limitation, is that if the extending class *<u>does not</u>* override a function in it's class, you cannot override it yourself in the custom class.
 Here is an example:
@@ -159,13 +159,3 @@ function new() {
 }
 ```
 </div>
-
-Next steps in learning the In-and-out's of HScript
-- [Features](./features.md)
-- [[PREV] Formatting, and Basic Syntax](./style.md)
-- [Event Callbacks](./cancellables.md)
-- [[NEXT] PlayState Interaction](./playstate.md)
-- [Custom States / SubStates](./states.md)
-- [Custom Events / Notetypes](./events.md)
-- [Global Script](./global.md)
-- [Custom Classes](./classes.md)
