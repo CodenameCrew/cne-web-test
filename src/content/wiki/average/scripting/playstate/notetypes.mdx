@@ -1,0 +1,40 @@
+---
+author: clairedeluneee
+desc: Explains how to create custom events and notetypes
+lastUpdated: 2026-03-03T02:45:00.298Z
+title: Scripting - Custom Events
+---
+
+# Creating Custom Notetypes
+The creation of custom notetypes is similar to how custom events are made, minus the JSON. You will need two files for this, your script file (the `.hx`), and your note sprites (the `.xml` and `.png`).
+
+## The Script
+Notetype scripts go to `./data/notes`.
+
+The minimal setup needed for notetype scripts looks like this:
+```haxe
+function onPlayerHit(event) {
+    if (event.noteType != "name") return;
+    // code goes here
+}
+```
+The early `return` is also present here, as ***any*** note getting hit will fire it, which also includes normal notes. Similar to event scripts, one notetype may only have one script, but this script can also be used to handle other notetypes, including normal ones if you wish. 
+
+You may also set up behavior if a certain notetype is either hit by the opponent or either player or opponent, or if it was missed.
+```haxe
+function onDadHit(event) {
+    if (event.noteType != "name") return;
+    // code for when the opponent hits the note goes here
+}
+function onNoteHit(event) {
+    if (event.noteType != "name") return;
+    // code for when either player or opponent hits the note goes here
+}
+function onNoteMiss(event) {
+    if (event.noteType != "name") return;
+    // code for when this note was missed goes here
+}
+```
+
+## The Sprites
+Note sprites go to `./images/game/notes`. If they are named after the notetype, the sprites for these are automatically replaced.
