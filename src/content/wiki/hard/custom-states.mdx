@@ -9,10 +9,10 @@ title: Scripting - Custom States / SubStates
 `FlxState` (or **[MusicBeatState](../../../api-docs/funkin/backend/MusicBeatState)**) are your States that you can switch between on run-time, allowing for multiple scenes and organization of your code.
 
 Custom States allow you to execute your own code in your own way, it's 99% similar to creating a State from source.
-You **cannot** have [Custom Classes](./classes.md) extend from any form of `FlxState` or `FlxSubState` (also any class that inherits it), as it isn't supported by `hscript-improved`
+You **cannot** have [Custom Classes](../expert/classes.mdx) extend from any form of `FlxState` or `FlxSubState` (also any class that inherits it), as it isn't supported by `hscript-improved`
 
 ## Changing existing states
-With [`modpack.ini`](../config.md) you are able to override states such as **[FreeplayState](../../../api-docs/funkin/menus/FreeplayState)** with your own custom state.
+With [`modpack.ini`](../modding.mdx) you are able to override states such as **[FreeplayState](../../../api-docs/funkin/menus/FreeplayState)** with your own custom state.
 Although, if you still wanted to use the base State and add on-to it with a script, then you can do so!
 
 In Codename Engine, appending a Script to a **[MusicBeatState](../../../api-docs/funkin/backend/MusicBeatState)** or **[MusicBeatSubState](../../../api-docs/funkin/backend/MusicBeatSubstate)** is very simple. All you need to do is place a file with the Class Name in `./data/states/`.
