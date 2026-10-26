@@ -89,12 +89,12 @@ import '../../styles/code.css';
             if (json.image) {
                 // psych 1.0+ has multisheet
                 const imageSplit = json.image.toString().split(',');
-                var defImage:string  = imageSplit.shift();
+                var defImage:string  = imageSplit.shift().trim();
                 if (defImage.startsWith('characters/')) defImage = defImage.substring('characters/'.length, defImage.length);
                 if (charName && charName != defImage) xml.setAttribute('sprite', defImage);
 
                 while (imageSplit.length > 0) {
-                     var defImage:string  = imageSplit.shift();
+                     var defImage:string  = imageSplit.shift().trim();
                     if (defImage.startsWith('characters/')) defImage = defImage.substring('characters/'.length, defImage.length);
                     var spritesheet = __xml.createElement('sheet'); // <spritesheet> works too but its long so i dont like it
                     spritesheet.setAttribute('path', defImage);
