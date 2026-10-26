@@ -1,5 +1,10 @@
 ---
 import '../styles/global.css';
+interface Props {
+    inputid ?: string,
+    accept ?: string
+}
+const { inputid, accept } = Astro.props;
 ---
 <style>
 
@@ -50,7 +55,7 @@ import '../styles/global.css';
     }
 </style>
 <div class="custom-file-upload phantommuff">
-    <input type="file" class="file" />
+    <input type="file" class="file" id={inputid} accept={accept}/>
     <img src={(import.meta.env.DEV?'':import.meta.env.BASE_URL)+'/'+"img/icons/pixel/upload.png"} alt=" " width="16" height="16" style="image-rendering: pixelated;"/>
     <span>Upload...</span>
 </div>

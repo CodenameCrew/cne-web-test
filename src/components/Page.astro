@@ -98,7 +98,7 @@ const { title = 'Home', desc = 'cod name', noFooter = false } = Astro.props;
 							{name: 'API', url: 'api-docs/'},
 							{name: 'Wiki', url: 'wiki/index/'},
 							{name: 'Tools', url: 'tools/'},
-							{name: 'Contribute', url: 'https://github.com/CodenameCrew/cne-web-test/'}
+							{name: 'Contribute', url: 'https://github.com/CodenameCrew/codename-website/'}
 						].map((a) => (
 							<a href={(a.url.startsWith('http')?'':(import.meta.env.DEV?'':(import.meta.env.BASE_URL+'/')))+a.url} style="text-decoration: none;">
 								<button>{a.name}</button>
