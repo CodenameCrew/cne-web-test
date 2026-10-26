@@ -159,9 +159,14 @@ function getShowCondition(a:any) {
 			<div class="subpanel" style="height: 53vh;">
 				<div class="mod-container">
 				{
-					mods.map((a:any) => (
+					(mods.length > 0) ? mods.map((a:any) => (
 						<Mod data={a.data} id={a.id} show={getShowCondition(a)} />
-					))
+					)) : (
+						<div style="width: 200%;">
+						<h2 style="margin: 0;">Nothing here yet...</h2>
+						<i>One day... a mod will be here... it may be yours.. hopefully..</i>
+						</div>
+					)
 				}
 				</div>
 			</div>
@@ -196,7 +201,18 @@ function getShowCondition(a:any) {
 		TODO: implement the widget
 		PLEASE i cant get it to work somehow
 	-->
-	<button onclick='window.open("https://ko-fi.com/codename_engine", "_blank")' style="border-radius: 2px; position: fixed; bottom: 1vw; left: 1vw; z-index: 999;">
+	<!--<button onclick='window.open("https://ko-fi.com/codename_engine", "_blank")' style="border-radius: 2px; position: fixed; bottom: 1vw; left: 1vw; z-index: 999;">
 		<img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" width="20" alt="Ko-fi"/>&nbsp;Donate
-	</button>
+	</button> -->
+
+	<script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js' is:inline/>
+	<script is:inline>
+	kofiWidgetOverlay.draw('codename_engine', {
+		'type': 'floating-chat',
+		'floating-chat.donateButton.text': 'Donate',
+		'floating-chat.donateButton.background-color': '#b265bd',
+		'floating-chat.donateButton.text-color': '#fff',
+		'floating-chat.stylesheets': '["https://codename-engine.com/ko-fi.css"]',
+	});
+	</script>
 </Page>
