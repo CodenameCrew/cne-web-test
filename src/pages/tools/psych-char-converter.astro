@@ -62,7 +62,7 @@ import '../../styles/code.css';
             if (json.scale && json.scale != 1) amazingScale = json.scale;
             if (amazingScale != 1) xml.setAttribute('scale', amazingScale.toString());
             if (json.sing_duration && json.sing_duration != 4) xml.setAttribute('holdTime', json.sing_duration.toString());
-            if (json.no_antialiasing != false) xml.setAttribute('antialiasing', json.no_antialiasing.toString());
+            if (json.no_antialiasing != false) xml.setAttribute('antialiasing', (!json.no_antialiasing).toString());
             // 1.0+
             if (json._editor_isPlayer != null && json._editor_isPlayer !== false) xml.setAttribute('flipX', json._editor_isPlayer.toString());
             if (json.flip_x != (json._editor_isPlayer ?? false)) xml.setAttribute('flipX', json.flip_x.toString());
