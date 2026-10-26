@@ -119,8 +119,8 @@ import '../../styles/code.css';
                     anim.setAttribute('name', jsonAnim.anim.replace(/-hold$/, '-loop'));
                     anim.setAttribute('anim', jsonAnim.name);
                     if (jsonAnim.offsets) {
-                        if (jsonAnim.offsets[0] !== 0) anim.setAttribute('x', (jsonAnim.offsets[0] * amazingScale).toString());
-                        if (jsonAnim.offsets[1] !== 0) anim.setAttribute('y', (jsonAnim.offsets[1] * amazingScale).toString());
+                        if (jsonAnim.offsets[0] !== 0) anim.setAttribute('x', (jsonAnim.offsets[0] / amazingScale).toString());
+                        if (jsonAnim.offsets[1] !== 0) anim.setAttribute('y', (jsonAnim.offsets[1] / amazingScale).toString());
                     }
                     if (jsonAnim.fps !== defaultFPSScanned) anim.setAttribute('fps', jsonAnim.fps.toString());
                     if (jsonAnim.loop !== false) anim.setAttribute('loop', jsonAnim.loop.toString());
