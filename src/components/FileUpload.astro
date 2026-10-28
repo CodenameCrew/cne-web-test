@@ -6,8 +6,7 @@ interface Props {
 }
 const { inputid, accept } = Astro.props;
 ---
-<style>
-
+<style is:global>
     .custom-file-upload {
         display: flex;
         padding: 8px;
@@ -34,13 +33,6 @@ const { inputid, accept } = Astro.props;
         background-position: center;
     }
 
-    div.fakefile {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        z-index: 1;
-    }
-
     input.file {
         cursor: pointer;
         position: absolute;
@@ -50,6 +42,7 @@ const { inputid, accept } = Astro.props;
         z-index: 0;
         font-size: 3em;
     }
+
     input.file::file-selector-button {
         cursor: pointer;
     }
@@ -67,10 +60,10 @@ const { inputid, accept } = Astro.props;
             const span = label.children[2];
             if (a.files[0] != null) {
                 const fileName = a.files[0].name;
-                span.innerText = fileName;
+                if (span) span.innerText = fileName;
                 label.classList.add('uploaded');
             } else {
-                span.innerText = 'Upload...';
+                if (span) span.innerText = 'Upload...';
                 label.classList.remove('uploaded');
             }
         };

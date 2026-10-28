@@ -49,7 +49,7 @@ function getShowCondition(a:any) {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 4px;
-		overflow: hidden scroll;
+		overflow: hidden auto;
 		max-height: 100%;
 	}
 
@@ -109,7 +109,9 @@ function getShowCondition(a:any) {
 							 	{name:`${getIconButton('gamebanana')} GameBanana`, 	link: "https://gamebanana.com/mods/download/598553"},
 							 	{name:`${getIconButton('itch')} itch.io`, 		   	link: "https://nex-isdumb.itch.io/codename-engine/purchase"}
 							].map((j) => (
+								<a href={j.link} style="text-decoration: none;">
 								<button set:html={j.name}/>
+								</a>
 							))
 						}
 						</div>
@@ -132,7 +134,7 @@ function getShowCondition(a:any) {
 						}
 						</div>
 						<p style="width: 24em;">
-							* <span style="color: var(--primary-color); font-size: 0.9em;">These downloads come directly from our GitHub Actions and run on the latest changes.<br/><br/>They might be unstable as they're really new, use them at risk of bugs!</span>
+							* <span style="color: var(--primary-color); font-size: 0.9em;">These downloads come directly from our GitHub Actions and run on the latest changes.<br/>They might be unstable as they're really new, use them at risk of bugs!</span>
 						</p>
 					</td>
 				</tr>
@@ -143,20 +145,24 @@ function getShowCondition(a:any) {
 			<br/>You can find the engine source by going to the <a href="https://github.com/CodenameCrew/CodenameEngine/" target="_blank">Engine repository</a>
 		</div>
 		<div class="panel" style="display: flex; flex-direction: column;" x-data="{ curSelected: 'All' }">
-			<h3 style="text-align: center;">Mods</h3>
+			<div style="display: flex; align-items: center; justify-content: space-between;">
+				<h2 style="margin: 0;">Mods</h2>
+				<div style="display: flex; justify-content: center; margin-bottom: 5px;">
+					<a href="https://deltarune.com/lancer/" target="_blank" style="text-decoration: none; width: 100%;">
+						<button style="width: 100%; margin: 0;" set:html={`${getIconButton('external')} Submit your own!`}/>
+					</a>
+				</div>
+			</div>
 			<div style="display: flex; justify-content: center; margin-bottom: 5px;">
 			{
-				['All', 'Featured', 'Loved', 'Admin Pick', 'Upcoming'].map((a) => (
-					<button x-on:click={`curSelected = '${a}'`} x-bind:class={`curSelected == '${a}' ? null : 'col-black'`}>{a}</button>
+				['All', 'Featured', 'Admin Pick', 'Upcoming'].map((a) => (
+					<button x-on:click={`curSelected = '${a}'`} x-bind:class={`curSelected == '${a}' ? null : 'col-black'`}
+					style="width: 100%;">{a}</button>
 				))
 			}
 			</div>
-			<div style="display: flex; justify-content: center; margin-bottom: 5px;">
-				<a href="https://deltarune.com/lancer/" target="_blank" style="text-decoration: none; width: 100%;">
-					<button style="width: 100%;" set:html={`${getIconButton('external')} Submit your own!`}/>
-				</a>
-			</div>
-			<div class="subpanel" style="height: 53vh;">
+			<hr style="width: 100%;"/>
+			<div class="subpanel" style="height: 60vh;">
 				<div class="mod-container">
 				{
 					(mods.length > 0) ? mods.map((a:any) => (
@@ -164,7 +170,7 @@ function getShowCondition(a:any) {
 					)) : (
 						<div style="width: 200%;">
 						<h2 style="margin: 0;">Nothing here yet...</h2>
-						<i>One day... a mod will be here... it may be yours.. hopefully..</i>
+						<i>One day... a mod will be here... it may be yours... hopefully.</i><br/>						
 						</div>
 					)
 				}

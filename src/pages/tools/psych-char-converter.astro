@@ -5,6 +5,8 @@ import '../../styles/code.css';
 ---
 <Page title="Psych Character Converter">
     <script src="https://unpkg.com/prismjs@1.30.0/prism.js"/>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"/>
+
     <div class="panel" style="text-align: center; width: fit-content; margin: auto;">
         <div class="phantommuff">
             <h1 style="margin: 0.2em;">Psych Character Converter</h1>
@@ -22,12 +24,14 @@ import '../../styles/code.css';
                         <span class="phantommuff">Input File (.json)</span>
                     </div>
                     <div style="margin: 3px; display: flex; gap: 12px;">
-                        <button id="folder-upload"
-                        class="col-black" style="
+                        <button
+                        class="col-black custom-file-upload" style="
                         margin: 0; border-radius: 8px;
                         padding: 8px; font-size: 1.2em;
-                        border: 2px dotted #dfae0e;" title="Convert Entire Folder"
-                        onclick="window.alert('Not reimplemented yet...')">📂</button>
+                        border: 2px dotted #dfae0e;" title="Convert Entire Folder">
+                        📂
+                        <input type="file" class="file" directory webkitdirectory mozdirectory id="folder-upload"/>
+                        </button>
                         <FileUpload inputid="upload" accept=".json"/>
                     </div>
                 </div>
@@ -177,6 +181,42 @@ import '../../styles/code.css';
                     const xmlOutput = xmlToString(convertCharacter(niceValue, upload_butt.files[0].name.replace(/.json$/, '')));
                     (document.getElementById('input-textarea') as HTMLInputElement).value = niceValue;
                     (document.getElementById('output-textarea') as HTMLElement).innerHTML = Prism.highlight(xmlOutput, Prism.languages.xml, 'xml');
+                } catch(e:any) {
+                    window.alert(e.toString());
+                }
+            });
+        }
+
+        // "JSZip is not defined" my ass
+        var zip:any = null;
+        var folder_butt = document.getElementById('folder-upload') as HTMLInputElement;
+        if (folder_butt != null) {
+            folder_butt.addEventListener('change', async () => {
+                try {
+                    if (folder_butt.files == null) return;
+                    if (zip == null) zip = new JSZip();
+                    var idiot = new Map();
+                    for (var i = 0; i < folder_butt.files.length; i++) {
+                        var file = folder_butt.files[i];
+                        if (!file.name.endsWith('.json')) continue;
+                        const niceValue = await file.text();
+                        const name = file.name.replace(/.json$/, '');
+                        idiot.set(name + '.xml', xmlToString(convertCharacter(niceValue, name)));
+                    }
+                    for (const i of idiot) {
+                        zip.file(i[0], i[1]);
+                    }
+                    zip.generateAsync({type:"base64"}).then(function (base64) {
+                        var element = document.createElement('a');
+                        element.setAttribute('href', "data:application/zip;base64," + base64);
+                        element.setAttribute('download', 'characters.zip');
+                        element.style.display = 'none';
+                        document.body.appendChild(element);
+                        element.click();
+                        document.body.removeChild(element);
+                    }, function (err:any) {
+                        throw err;
+                    });
                 } catch(e:any) {
                     window.alert(e.toString());
                 }
