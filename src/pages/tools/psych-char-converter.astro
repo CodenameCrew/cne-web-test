@@ -76,7 +76,7 @@ import '../../styles/code.css';
                     (json.healthbar_colors[0] << 16)
                     + (json.healthbar_colors[1] << 8)
                     + json.healthbar_colors[2]
-                ).toString(16));
+                ).toString(16).padStart(6, '0'));
             }
 
             if (json.position) {
